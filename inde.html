@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persona ARG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2e;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        #game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            background-color: #2e2e3e;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff4757;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff6b81;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Persona ARG</h1>
+        <p id="question">Bem-vindo ao desafio! Resolva o enigma para avançar. Qual é o nome da Marie de Persona 4 em sua boss fight em Base 64 em ASCII  e em LF(Unix)?</p> 
+        <input type="text" id="answer" placeholder="Digite sua resposta aqui">
+        <button id="submit-button" onclick="checkAnswer()">Enviar</button>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        const enigmas = [
+            { 
+                question: "Qual é o nome da Marie de Persona 4 em sua boss fight em Base 64 em ASCII  e em LF(Unix)?", 
+                answer: "S3VzdW1pLW5vLU9rYW1p" 
+            },
+            { 
+                question: "Qual é o nome do persona inicial do protagonista de persona 5 em Cifra de Vigenère com as letras de A á J?", 
+                answer: "Asuèqi" 
+            },
+            { 
+                question: "Qual é o nome do Persona final de Yu Narukami em Cifra de César com 20 deslocamentos a direita?", 
+                answer: "Ctuhuac-hi-Ieugc" 
+            },
+            { 
+                question: "Qual é o número exato de partículas de poeira na sala Velvet Room durante a cena final de Persona 5 Royal?", 
+                answer: "Desconhecido" 
+            }
+        ];
+
+        let currentLevel = 0;
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value.trim();
+            const feedback = document.getElementById("feedback");
+
+            if (userAnswer === "") {
+                feedback.textContent = "Por favor, insira uma resposta antes de enviar.";
+                return;
+            }
+
+            if (userAnswer.toLowerCase() === enigmas[currentLevel].answer.toLowerCase()) {
+                currentLevel++;
+                if (currentLevel < enigmas.length) {
+                    document.getElementById("question").textContent = enigmas[currentLevel].question;
+                    feedback.textContent = "Correto! Próximo enigma.";
+                    document.getElementById("answer").value = "";
+                } else {
+                    document.getElementById("game-container").innerHTML = `
+                        <h1>Parabéns!</h1>
+                        <p>Manda esse código para a minha DM para eu voltar ao normal: 4819-4827-0702</p>
+                    `;
+                }
+            } else {
+                feedback.textContent = "Resposta errada. Tente novamente!";
+            }
+        }
+    </script>
+</body>
+</html>
